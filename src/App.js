@@ -27,7 +27,15 @@ class App extends Component {
             <Widget>
               <form className="novoTweet">
                 <div className="novoTweet__editorArea">
-                <span className="novoTweet__status">{novoTweet.length}/140</span>
+                <span className={
+                    `novoTweet__status
+                    ${
+                            this.state.novoTweet.length	>	140
+                            ?	'novoTweet__status--invalido'
+                            :	''
+                    }
+                    `
+                }>{novoTweet.length}/140</span>
                 <textarea 
                   className="novoTweet__editor" 
                   placeholder="O que está acontecendo?"
