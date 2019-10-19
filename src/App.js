@@ -7,7 +7,16 @@ import TrendsArea from './components/TrendsArea'
 import Tweet from './components/Tweet'
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      novoTweet: ''
+    }
+  }
+
   render() {
+    const {novoTweet} = this.state;
+    
     return (
       <Fragment>
         <Cabecalho>
@@ -18,10 +27,17 @@ class App extends Component {
             <Widget>
               <form className="novoTweet">
                 <div className="novoTweet__editorArea">
-                <span className="novoTweet__status">0/140</span>
-                <textarea className="novoTweet__editor" placeholder="O que está acontecendo?"></textarea>
+                <span className="novoTweet__status">{novoTweet.length}/140</span>
+                <textarea 
+                  className="novoTweet__editor" 
+                  placeholder="O que está acontecendo?"
+                  value={this.state.novoTweet}
+                  onChange={ event => this.setState({novoTweet: event.target.value}) }></textarea>
               </div>
-              <button type="submit" className="novoTweet__envia">Tweetar</button>
+              <button 
+                type="submit" 
+                className="novoTweet__envia"
+                disabled={novoTweet.length === 0 || novoTweet.length > 140}>Tweetar</button>
               </form>
             </Widget>
             <Widget>
