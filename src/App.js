@@ -1,10 +1,13 @@
 import React from 'react';
 import Cabecalho from './components/cabecalho';
+import NavMenu from './components/navmenu';
 
 function App() {
   return (
     <div>
-      <Cabecalho usuario="@guilhermependezza" />
+      <Cabecalho>
+        <NavMenu usuario="@guilhermependezza" />
+      </Cabecalho>
     </div>
   );
 }
