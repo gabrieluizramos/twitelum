@@ -1,16 +1,27 @@
 import React, { Component, Fragment } from 'react';
-import Cabecalho from './components/Cabecalho'
-import NavMenu from './components/NavMenu'
-import Dashboard from './components/Dashboard'
-import Widget from './components/Widget'
-import TrendsArea from './components/TrendsArea'
-import Tweet from './components/Tweet'
+import Cabecalho from '../../components/Cabecalho'
+import NavMenu from '../../components/NavMenu'
+import Dashboard from '../../components/Dashboard'
+import Widget from '../../components/Widget'
+import TrendsArea from '../../components/TrendsArea'
+import Tweet from '../../components/Tweet'
 
-class App extends Component {
+class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      novoTweet: ''
+      novoTweet: '',
+      tweets: []
+    }
+  }
+
+  adicionaTweet = (infosDoEvento) => {
+    infosDoEvento.preventDefault();
+    if(this.state.novoTweet.length > 0) {
+      this.setState({
+        tweets: [this.state.novoTweet, ...this.state.tweets],
+        novoTweet: ''
+      });
     }
   }
 
@@ -45,6 +56,7 @@ class App extends Component {
               <button 
                 type="submit" 
                 className="novoTweet__envia"
+                onClick={this.adicionaTweet}
                 disabled={novoTweet.length === 0 || novoTweet.length > 140}>Tweetar</button>
               </form>
             </Widget>
@@ -55,7 +67,14 @@ class App extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                <Tweet />
+                {this.state.tweets.map((tweetInfo, index) => {
+                  return (
+                    <Tweet
+                      key={tweetInfo + index}
+                      texto={tweetInfo}
+                    />
+                  )
+                })}
               </div>
             </Widget>
           </Dashboard>
@@ -65,4 +84,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default HomePage;
