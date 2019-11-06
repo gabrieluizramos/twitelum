@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import NotFoundPage from './pages/NotFound'
 
 class Roteamento extends Component {
     render() {
@@ -9,6 +10,7 @@ class Roteamento extends Component {
             <Switch>
                 <PrivateRoute path="/" component={HomePage} exact />
                 <Route path="/login" component={LoginPage} />
+                <Route component={NotFoundPage} />
             </Switch>
         )
     }
