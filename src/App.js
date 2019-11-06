@@ -10,7 +10,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      novoTweet: ''
+      novoTweet: '',
+      tweets: []
+    }
+  }
+
+  adicionaTweet = (infosDoEvento) => {
+    infosDoEvento.preventDefault();
+    if(this.state.novoTweet.length > 0) {
+      this.setState({
+        tweets: [this.state.novoTweet, ...this.state.tweets],
+        novoTweet: ''
+      });
     }
   }
 
@@ -45,6 +56,7 @@ class App extends Component {
               <button 
                 type="submit" 
                 className="novoTweet__envia"
+                onClick={this.adicionaTweet}
                 disabled={novoTweet.length === 0 || novoTweet.length > 140}>Tweetar</button>
               </form>
             </Widget>
@@ -55,7 +67,14 @@ class App extends Component {
           <Dashboard posicao="centro">
             <Widget>
               <div className="tweetsArea">
-                <Tweet />
+                {this.state.tweets.map((tweetInfo, index) => {
+                  return (
+                    <Tweet
+                      key={tweetInfo + index}
+                      texto={tweetInfo}
+                    />
+                  )
+                })}
               </div>
             </Widget>
           </Dashboard>
