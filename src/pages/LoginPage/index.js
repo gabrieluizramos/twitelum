@@ -1,10 +1,13 @@
 import React, { Component, Fragment } from 'react'
+import { NotificacaoContext } from '../../context/NotificacaoContext' 
 import Cabecalho from '../../components/Cabecalho'
 import Widget from '../../components/Widget'
 
 import './loginPage.css'
 
 class LoginPage extends Component {
+    static contextType = NotificacaoContext
+
     render() {
         return (
             <Fragment>
@@ -26,7 +29,7 @@ class LoginPage extends Component {
                                     Mensagem de erro!
                                 </div> */}
                                 <div className="loginPage__inputWrap">
-                                    <button className="loginPage__btnLogin" type="submit">
+                                    <button className="loginPage__btnLogin" type="submit"> 
                                         Logar
                                     </button>
                                 </div>
