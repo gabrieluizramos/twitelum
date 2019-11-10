@@ -28,6 +28,10 @@ class Tweet extends Component {
             .then(response => console.log(response))
     }
 
+    handleClickNaAreaDeConteudo = () => {
+        this.props.onClickNaAreaDeConteudo && this.props.onClickNaAreaDeConteudo();
+    }
+
     render() {
         return (
             <article className="tweet">
@@ -36,7 +40,7 @@ class Tweet extends Component {
                     <span className="tweet__nomeUsuario">{this.props.usuario.nome}</span>
                     <a href="/"><span className="tweet__userName">@{this.props.usuario.login}</span></a>
                 </div>
-                <p className="tweet__conteudo">
+                <p className="tweet__conteudo" onClick={this.handleClickNaAreaDeConteudo}>
                     {this.props.texto}
                 </p>
                 <footer className="tweet__footer">
@@ -80,7 +84,8 @@ Tweet.propTypes = {
         nome: PropTypes.string
     }),
     texto: PropTypes.string,
-    removeHandler: PropTypes.func
+    removeHandler: PropTypes.func,
+    onClickNaAreaDeConteudo: PropTypes.func
 }
 
 Tweet.defaultProps = {
