@@ -1,8 +1,11 @@
 import React from 'react';
 
 const InputFormField = ({
-    id, label, errors, values, onChange
+    id, label, errors, values, onChange, touched, onBlur
 }) => {
+    const isTouched = Boolean(touched[id]);
+    const hasErrors = Boolean(errors[id]);
+
     return (
         <div className="loginPage__inputWrap">
             <label className="loginPage__label" htmlFor={id}>
@@ -15,10 +18,11 @@ const InputFormField = ({
                 id={id}
                 name={id}
                 value={values[id]} 
-                onChange={onChange}    
+                onChange={onChange}   
+                onBlur={onBlur} 
             />
             
-            <p style={{ color: 'red' }}>{errors[id] && errors[id]}</p>
+            <p style={{ color: 'red' }}>{isTouched && hasErrors && errors[id]}</p>
         </div>
     )
 }
