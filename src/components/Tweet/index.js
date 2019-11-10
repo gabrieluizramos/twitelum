@@ -33,7 +33,7 @@ class Tweet extends Component {
                 <div className="tweet__cabecalho">
                     <img className="tweet__fotoUsuario" src={this.props.usuario.foto} alt="" />
                     <span className="tweet__nomeUsuario">{this.props.usuario.nome}</span>
-        <a href="/"><span className="tweet__userName">@{this.props.usuario.login}</span></a>
+                    <a href="/"><span className="tweet__userName">@{this.props.usuario.login}</span></a>
                 </div>
                 <p className="tweet__conteudo">
                     {this.props.texto}
@@ -54,6 +54,14 @@ class Tweet extends Component {
                         </svg>
                         {this.state.totalLikes}
                     </button>
+                    {
+                        this.props.removivel &&
+                        <button
+                            onClick={this.props.removeHandler}
+                            className="btn btn--blue btn--remove">
+                                X
+                        </button>
+                    }
                 </footer>
             </article>
         )
