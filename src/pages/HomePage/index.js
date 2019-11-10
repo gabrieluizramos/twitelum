@@ -5,6 +5,7 @@ import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
+import Helmet from 'react-helmet';
 
 class HomePage extends Component {
   constructor() {
@@ -56,6 +57,9 @@ class HomePage extends Component {
     
     return (
       <Fragment>
+        <Helmet>
+          <title>Twitelum - ({`${this.state.tweets.length}`})</title>
+        </Helmet>
         <Cabecalho>
           <NavMenu usuario="@omariosouto" />
         </Cabecalho>
