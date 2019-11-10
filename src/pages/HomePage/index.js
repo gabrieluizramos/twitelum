@@ -18,10 +18,27 @@ class HomePage extends Component {
   adicionaTweet = (infosDoEvento) => {
     infosDoEvento.preventDefault();
     if(this.state.novoTweet.length > 0) {
-      this.setState({
-        tweets: [this.state.novoTweet, ...this.state.tweets],
-        novoTweet: ''
-      });
+      const token = localStorage.getItem('TOKEN');
+
+      fetch(`https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${token}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          conteudo: this.state.novoTweet,
+          login: 'omariosouto'
+        })
+      })
+      .then(respostaDoServer => {
+        return respostaDoServer.json()
+      })
+      .then((tweetDoServidor) => {
+        this.setState({
+          tweets: [tweetDoServidor, ...this.state.tweets],
+          novoTweet: ''
+        });
+      })
     }
   }
 
@@ -71,7 +88,8 @@ class HomePage extends Component {
                   return (
                     <Tweet
                       key={tweetInfo + index}
-                      texto={tweetInfo}
+                      texto={tweetInfo.conteudo}
+                      usuario={tweetInfo.usuario}
                     />
                   )
                 })}
