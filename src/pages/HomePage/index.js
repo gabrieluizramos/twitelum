@@ -7,7 +7,7 @@ import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
 import Modal from '../../components/Modal'
 import Helmet from 'react-helmet';
-import { tsExpressionWithTypeArguments } from '@babel/types';
+import { TweetsService } from '../../services/TweetsService';
 
 class HomePage extends Component {
   constructor() {
@@ -36,22 +36,17 @@ class HomePage extends Component {
       this.setState({ tweets: window.store.getState() })
     })
 
-    const token = localStorage.getItem('TOKEN');
-    fetch(`https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${token}`)
-      .then(response => response.json())
+    TweetsService
+      .carrega()
       .then(tweets => {
         window.store.dispatch({ type: 'CARREGA_TWEETS', tweets });
       })
   }
 
   removeTweet(idTweetQueVaiSerRemovido) {
-    const token = localStorage.getItem('TOKEN');
-    fetch(`https://twitelum-api.herokuapp.com/tweets/${idTweetQueVaiSerRemovido}?X-AUTH-TOKEN=${token}`, {
-      method: 'DELETE'
-    })
-      .then(response => response.json())
+    TweetsService
+      .remove(idTweetQueVaiSerRemovido)
       .then(response => {
-        console.log(response);
         const listaDeTweetsAtualizada = this.state.tweets.filter(tweet => tweet._id !== idTweetQueVaiSerRemovido);
         this.setState({
           tweets: listaDeTweetsAtualizada
@@ -63,27 +58,14 @@ class HomePage extends Component {
   adicionaTweet = (infosDoEvento) => {
     infosDoEvento.preventDefault();
     if(this.state.novoTweet.length > 0) {
-      const token = localStorage.getItem('TOKEN');
-
-      fetch(`https://twitelum-api.herokuapp.com/tweets?X-AUTH-TOKEN=${token}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          conteudo: this.state.novoTweet,
-          login: 'omariosouto'
+      TweetsService
+        .adiciona(this.state.novoTweet)
+        .then((tweetDoServidor) => {
+          this.setState({
+            tweets: [tweetDoServidor, ...this.state.tweets],
+            novoTweet: ''
+          });
         })
-      })
-      .then(respostaDoServer => {
-        return respostaDoServer.json()
-      })
-      .then((tweetDoServidor) => {
-        this.setState({
-          tweets: [tweetDoServidor, ...this.state.tweets],
-          novoTweet: ''
-        });
-      })
     }
   }
 

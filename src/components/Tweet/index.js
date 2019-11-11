@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import './tweet.css'
+import { TweetsService } from '../../services/TweetsService';
 
 class Tweet extends Component {
     constructor(props) {
@@ -20,11 +21,8 @@ class Tweet extends Component {
             totalLikes: likeado ? totalLikes - 1 : totalLikes + 1
         })
 
-        const token = localStorage.getItem('TOKEN');
-        fetch(`https://twitelum-api.herokuapp.com/tweets/${idDoTweet}/like?X-AUTH-TOKEN=${token}`, {
-            method: 'POST'
-        })
-            .then(response => response.json())
+        TweetsService
+            .like(idDoTweet)
             .then(response => console.log(response))
     }
 
