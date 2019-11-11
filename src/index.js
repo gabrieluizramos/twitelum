@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from 'react-router-dom';
+import './store';
 
 // CSSs Globais
 import "./assets/css/reset.css";
