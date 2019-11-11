@@ -12,4 +12,4 @@ const store = createStore(tweetsReducer);
 
 console.log('Primeira versão da store: ', store.getState())
 
-window.store = store;
+export default store;

@@ -7,9 +7,12 @@ import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
 import Modal from '../../components/Modal'
 import Helmet from 'react-helmet';
+import { ReactReduxContext } from 'react-redux';
 import { TweetsService } from '../../services/TweetsService';
 
 class HomePage extends Component {
+  static contextType = ReactReduxContext
+
   constructor() {
     super();
     this.state = {
@@ -32,14 +35,15 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    window.store.subscribe(() => {
-      this.setState({ tweets: window.store.getState() })
+    const { store } = this.context
+    store.subscribe(() => {
+      this.setState({ tweets: store.getState() })
     })
 
     TweetsService
       .carrega()
       .then(tweets => {
-        window.store.dispatch({ type: 'CARREGA_TWEETS', tweets });
+        this.context.store.dispatch({ type: 'CARREGA_TWEETS', tweets });
       })
   }
 
